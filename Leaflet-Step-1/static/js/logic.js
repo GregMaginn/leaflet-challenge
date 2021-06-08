@@ -52,7 +52,7 @@ function cirMaker(quakeData){
         pointToLayer: function(feature, latlng) {
             return L.circleMarker(latlng, {
                 opacity: 1,
-                fillOpacity: 1,
+                fillOpacity: .75,
                 color: "white",
                 fillColor: setColor(feature.properties.mag),
                 radius: setSize(feature.properties.mag),
@@ -63,6 +63,7 @@ function cirMaker(quakeData){
         onEachFeature: onEachFeature
     })
     createMap(quakes)
+    console.log("Created MAP")
 }
 function createMap(quakesDaily){
     //create background of map via mapbox
@@ -73,18 +74,9 @@ function createMap(quakesDaily){
     accessToken: API_KEY
     });
 
-    var darkmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-        attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-        tileSize: 512,
-        maxZoom: 18,
-        id: "dark-v10",
-        accessToken: API_KEY
-      });
-
     //create object to hold lightmap layer
     var baseMaps = {
         "Light Map": lightmap,
-        "Dark Map": darkmap
     };
 
     //create overlay object to hold entire map
@@ -93,9 +85,9 @@ function createMap(quakesDaily){
     };
 
     //create map object with placement and zoom
-    var map = L.map("quake-map",  {
-        center: [40.73, -74.00],
-        zoom: 5,
+    var map = L.map("map",  {
+        center: [0, 0],
+        zoom: 2,
         layers: [lightmap, quakesDaily]
     })
     
